@@ -1,0 +1,590 @@
+{
+  "movies": [
+    {
+      "id": "1",
+      "title": "Inception",
+      "year": 2010,
+      "genre": [
+        "Sci-Fi",
+        "Thriller"
+      ],
+      "rating": 8.8,
+      "poster": "https://image.tmdb.org/t/p/original/ljsZTbVsrQSqZgWeep2B1QiDKuh.jpg",
+      "description": "A thief who enters the dreams of others to steal secrets from their subconscious.",
+      "director": "Christopher Nolan",
+      "actors": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Interstellar",
+      "year": 2014,
+      "genre": [
+        "Sci-Fi",
+        "Drama"
+      ],
+      "rating": 8.6,
+      "poster": "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+      "description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+      "director": "Christopher Nolan",
+      "actors": [
+        1,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "3",
+      "title": "The Dark Knight",
+      "year": 2008,
+      "genre": [
+        "Action",
+        "Crime"
+      ],
+      "rating": 9,
+      "poster": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+      "description": "When the menace known as the Joker emerges, Batman must accept one of the greatest psychological tests of his ability to fight injustice.",
+      "director": "Christopher Nolan",
+      "actors": [
+        2,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Avatar",
+      "year": 2009,
+      "genre": [
+        "Sci-Fi",
+        "Adventure"
+      ],
+      "rating": 7.8,
+      "poster": "https://image.tmdb.org/t/p/w500/kyeqWdyUXW608qlYkRqosgbbJyK.jpg",
+      "description": "A paraplegic Marine dispatched to Pandora on a unique mission becomes torn between following orders and protecting the world he feels is his home.",
+      "director": "James Cameron",
+      "actors": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Titanic",
+      "year": 1997,
+      "genre": [
+        "Romance",
+        "Drama"
+      ],
+      "rating": 7.8,
+      "poster": "https://image.tmdb.org/t/p/original/8MFJ4aAr85B5lVCecxGSd9iX6FX.jpg",
+      "description": "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.",
+      "director": "James Cameron",
+      "actors": [
+        1,
+        10
+      ]
+    },
+    {
+      "id": "6",
+      "title": "The Matrix",
+      "year": 1999,
+      "genre": [
+        "Sci-Fi",
+        "Action"
+      ],
+      "rating": 8.7,
+      "poster": "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
+      "description": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+      "director": "Lana Wachowski, Lilly Wachowski",
+      "actors": [
+        11,
+        12
+      ]
+    },
+    {
+      "id": "7",
+      "title": "Gladiator",
+      "year": 2000,
+      "genre": [
+        "Action",
+        "Drama"
+      ],
+      "rating": 8.5,
+      "poster": "https://image.tmdb.org/t/p/original/gQ4yDAx4ghnOMTHr1LL2vMEclJv.jpg",
+      "description": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
+      "director": "Ridley Scott",
+      "actors": [
+        13
+      ]
+    },
+    {
+      "id": "8",
+      "title": "The Lord of the Rings: The Fellowship of the Ring",
+      "year": 2001,
+      "genre": [
+        "Adventure",
+        "Fantasy"
+      ],
+      "rating": 8.8,
+      "poster": "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
+      "description": "A meek Hobbit and eight companions set out on a journey to destroy the One Ring and save Middle-earth from the Dark Lord Sauron.",
+      "director": "Peter Jackson",
+      "actors": [
+        14,
+        15
+      ]
+    },
+    {
+      "id": "9",
+      "title": "The Shawshank Redemption",
+      "year": 1994,
+      "genre": [
+        "Drama"
+      ],
+      "rating": 9.3,
+      "poster": "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
+      "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      "director": "Frank Darabont",
+      "actors": [
+        16,
+        17
+      ]
+    },
+    {
+      "id": "10",
+      "title": "The Godfather",
+      "year": 1972,
+      "genre": [
+        "Crime",
+        "Drama"
+      ],
+      "rating": 9.2,
+      "poster": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+      "description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+      "director": "Francis Ford Coppola",
+      "actors": [
+        18,
+        19
+      ]
+    },
+    {
+      "id": "11",
+      "title": "Joker",
+      "year": 2019,
+      "genre": [
+        "Crime",
+        "Drama"
+      ],
+      "rating": 8.4,
+      "poster": "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
+      "description": "A mentally troubled comedian embarks on a downward spiral that leads to the creation of an iconic villain.",
+      "director": "Todd Phillips",
+      "actors": [
+        20
+      ]
+    },
+    {
+      "id": "12",
+      "title": "Forrest Gump",
+      "year": 1994,
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
+      "rating": 8.8,
+      "poster": "https://image.tmdb.org/t/p/w500/h5J4W4veyxMXDMjeNxZI46TsHOb.jpg",
+      "description": "The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal, and other historical events unfold from the perspective of an Alabama man with an IQ of 75.",
+      "director": "Robert Zemeckis",
+      "actors": [
+        21
+      ]
+    },
+    {
+      "id": "13",
+      "title": "Inception",
+      "year": 2010,
+      "genre": [
+        "Sci-Fi",
+        "Thriller"
+      ],
+      "rating": 8.8,
+      "poster": "https://image.tmdb.org/t/p/original/ljsZTbVsrQSqZgWeep2B1QiDKuh.jpg",
+      "description": "A thief who enters the dreams of others to steal secrets from their subconscious.",
+      "director": "Christopher Nolan",
+      "actors": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "14",
+      "title": "Interstellar",
+      "year": 2014,
+      "genre": [
+        "Sci-Fi",
+        "Drama"
+      ],
+      "rating": 8.6,
+      "poster": "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+      "description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+      "director": "Christopher Nolan",
+      "actors": [
+        1,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "15",
+      "title": "The Dark Knight",
+      "year": 2008,
+      "genre": [
+        "Action",
+        "Crime"
+      ],
+      "rating": 9,
+      "poster": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+      "description": "When the menace known as the Joker emerges, Batman must accept one of the greatest psychological tests of his ability to fight injustice.",
+      "director": "Christopher Nolan",
+      "actors": [
+        2,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "16",
+      "title": "Avatar",
+      "year": 2009,
+      "genre": [
+        "Sci-Fi",
+        "Adventure"
+      ],
+      "rating": 7.8,
+      "poster": "https://image.tmdb.org/t/p/w500/kyeqWdyUXW608qlYkRqosgbbJyK.jpg",
+      "description": "A paraplegic Marine dispatched to Pandora on a unique mission becomes torn between following orders and protecting the world he feels is his home.",
+      "director": "James Cameron",
+      "actors": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "17",
+      "title": "Titanic",
+      "year": 1997,
+      "genre": [
+        "Romance",
+        "Drama"
+      ],
+      "rating": 7.8,
+      "poster": "https://image.tmdb.org/t/p/original/8MFJ4aAr85B5lVCecxGSd9iX6FX.jpg",
+      "description": "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.",
+      "director": "James Cameron",
+      "actors": [
+        1,
+        10
+      ]
+    },
+    {
+      "id": "18",
+      "title": "The Matrix",
+      "year": 1999,
+      "genre": [
+        "Sci-Fi",
+        "Action"
+      ],
+      "rating": 8.7,
+      "poster": "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
+      "description": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+      "director": "Lana Wachowski, Lilly Wachowski",
+      "actors": [
+        11,
+        12
+      ]
+    },
+    {
+      "id": "19",
+      "title": "Gladiator",
+      "year": 2000,
+      "genre": [
+        "Action",
+        "Drama"
+      ],
+      "rating": 8.5,
+      "poster": "https://image.tmdb.org/t/p/original/gQ4yDAx4ghnOMTHr1LL2vMEclJv.jpg",
+      "description": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
+      "director": "Ridley Scott",
+      "actors": [
+        13
+      ]
+    },
+    {
+      "id": "20",
+      "title": "The Lord of the Rings: The Fellowship of the Ring",
+      "year": 2001,
+      "genre": [
+        "Adventure",
+        "Fantasy"
+      ],
+      "rating": 8.8,
+      "poster": "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
+      "description": "A meek Hobbit and eight companions set out on a journey to destroy the One Ring and save Middle-earth from the Dark Lord Sauron.",
+      "director": "Peter Jackson",
+      "actors": [
+        14,
+        15
+      ]
+    },
+    {
+      "id": "21",
+      "title": "The Shawshank Redemption",
+      "year": 1994,
+      "genre": [
+        "Drama"
+      ],
+      "rating": 9.3,
+      "poster": "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
+      "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      "director": "Frank Darabont",
+      "actors": [
+        16,
+        17
+      ]
+    },
+    {
+      "id": "22",
+      "title": "The Godfather",
+      "year": 1972,
+      "genre": [
+        "Crime",
+        "Drama"
+      ],
+      "rating": 9.2,
+      "poster": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+      "description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+      "director": "Francis Ford Coppola",
+      "actors": [
+        18,
+        19
+      ]
+    },
+    {
+      "id": "23",
+      "title": "Joker",
+      "year": 2019,
+      "genre": [
+        "Crime",
+        "Drama"
+      ],
+      "rating": 8.4,
+      "poster": "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
+      "description": "A mentally troubled comedian embarks on a downward spiral that leads to the creation of an iconic villain.",
+      "director": "Todd Phillips",
+      "actors": [
+        20
+      ]
+    },
+    {
+      "id": "24",
+      "title": "Forrest Gump",
+      "year": 1994,
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
+      "rating": 8.8,
+      "poster": "https://image.tmdb.org/t/p/w500/h5J4W4veyxMXDMjeNxZI46TsHOb.jpg",
+      "description": "The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal, and other historical events unfold from the perspective of an Alabama man with an IQ of 75.",
+      "director": "Robert Zemeckis",
+      "actors": [
+        21
+      ]
+    }
+  ],
+  "watchlist": [
+    {
+      "id": "1"
+    },
+    {
+      "id": "6"
+    },
+    {
+      "id": "8"
+    }
+  ],
+  "watched": [
+    {
+      "id": "4"
+    },
+    {
+      "id": "2"
+    },
+    {
+      "id": "24"
+    }
+  ],
+  "actors": [
+    {
+      "id": 1,
+      "name": "Leonardo DiCaprio"
+    },
+    {
+      "id": 2,
+      "name": "Joseph Gordon-Levitt"
+    },
+    {
+      "id": 3,
+      "name": "Elliot Page"
+    },
+    {
+      "id": 4,
+      "name": "Matthew McConaughey"
+    },
+    {
+      "id": 5,
+      "name": "Anne Hathaway"
+    },
+    {
+      "id": 6,
+      "name": "Christian Bale"
+    },
+    {
+      "id": 7,
+      "name": "Heath Ledger"
+    },
+    {
+      "id": 8,
+      "name": "Sam Worthington"
+    },
+    {
+      "id": 9,
+      "name": "Zoe Saldana"
+    },
+    {
+      "id": 10,
+      "name": "Kate Winslet"
+    },
+    {
+      "id": 11,
+      "name": "Keanu Reeves"
+    },
+    {
+      "id": 12,
+      "name": "Laurence Fishburne"
+    },
+    {
+      "id": 13,
+      "name": "Russell Crowe"
+    },
+    {
+      "id": 14,
+      "name": "Elijah Wood"
+    },
+    {
+      "id": 15,
+      "name": "Ian McKellen"
+    },
+    {
+      "id": 16,
+      "name": "Tim Robbins"
+    },
+    {
+      "id": 17,
+      "name": "Morgan Freeman"
+    },
+    {
+      "id": 18,
+      "name": "Marlon Brando"
+    },
+    {
+      "id": 19,
+      "name": "Al Pacino"
+    },
+    {
+      "id": 20,
+      "name": "Joaquin Phoenix"
+    },
+    {
+      "id": 21,
+      "name": "Tom Hanks"
+    }
+  ],
+  "comments": [
+    {
+      "movieId": 1,
+      "comment": "tes",
+      "id": 1
+    },
+    {
+      "movieId": "2",
+      "comment": "tes satu dua tiga",
+      "id": 4
+    },
+    {
+      "movieId": "2",
+      "comment": "asfasdfasdfasdf",
+      "id": 5
+    },
+    {
+      "movieId": "2",
+      "comment": "tes ajaaa diedit",
+      "id": 6
+    },
+    {
+      "movieId": "7",
+      "comment": "Film yang bagus sekali",
+      "id": 7
+    },
+    {
+      "movieId": "3",
+      "comment": "tes",
+      "id": 8
+    },
+    {
+      "movieId": "3",
+      "comment": "tes lagi edited",
+      "id": 9
+    },
+    {
+      "movieId": "6",
+      "comment": "Satu dua tiga",
+      "id": 10
+    },
+    {
+      "movieId": "1",
+      "comment": "Ini adalah komentarrr",
+      "id": 11
+    },
+    {
+      "movieId": "1",
+      "comment": "Ini juga komentar, tapi diedit",
+      "id": 12
+    },
+    {
+      "movieId": "1",
+      "comment": "ini juga",
+      "id": 13
+    },
+    {
+      "movieId": "3",
+      "comment": "Ini film Batman",
+      "id": 15
+    },
+    {
+      "movieId": "12",
+      "comment": "tes satu",
+      "id": 16
+    },
+    {
+      "movieId": "2",
+      "comment": "tes",
+      "id": 17
+    }
+  ]
+}
