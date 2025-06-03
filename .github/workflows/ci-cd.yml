@@ -99,7 +99,7 @@ jobs:
     needs: deploy_staging
     environment:
       name: production
-      url: ${{ secrets.PRODUCTION_APP_URL }} # Pastikan secret ini ada
+      url: ${{ secrets.PRODUCTION_APP_URL }}
 
     steps:
       # Tidak perlu login ke Azure dengan Service Principal
