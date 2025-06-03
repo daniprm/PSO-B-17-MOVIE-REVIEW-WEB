@@ -10,6 +10,7 @@ env:
   # AZURE_WEBAPP_NAME_STAGING: ${{ secrets.AZURE_WEBAPP_NAME_STAGING }}
   AZURE_WEBAPP_NAME_PRODUCTION: ${{ secrets.AZURE_WEBAPP_NAME_PRODUCTION }}
   IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+  PRODUCTION_APP_URL: ${{secrets.PRODUCTION_APP_URL}}
 
 jobs:
   test:
@@ -102,7 +103,7 @@ jobs:
     needs: build_and_push_to_dockerhub
     environment:
       name: production
-      url: ${{secrets.PRODUCTION_APP_URL}}
+      url: ${{ env.PRODUCTION_APP_URL }}
 
     steps:
       - name: Deploy ke Azure Web App Production menggunakan Publish Profile
