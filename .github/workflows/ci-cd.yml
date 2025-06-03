@@ -42,32 +42,32 @@ jobs:
       # - name: Jalankan Tests
       #   run: npm test # GANTI DENGAN PERINTAH TEST ANDA
 
-  build_and_push_to_dockerhub:
-    name: Build & Push Docker Image to Docker Hub
-    runs-on: ubuntu-latest
-    needs: test # Bergantung pada job 'test'
+  # build_and_push_to_dockerhub:
+  #   name: Build & Push Docker Image to Docker Hub
+  #   runs-on: ubuntu-latest
+  #   needs: test # Bergantung pada job 'test'
 
-    # Hanya berjalan jika ada push ke branch 'main'
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  #   # Hanya berjalan jika ada push ke branch 'main'
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
-    steps:
-      - name: Checkout kode
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout kode
+  #       uses: actions/checkout@v4
 
-      - name: Login ke Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     - name: Login ke Docker Hub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build dan Push Docker Image ke Docker Hub
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+  #     - name: Build dan Push Docker Image ke Docker Hub
+  #       uses: docker/build-push-action@v5
+  #       with:
+  #         context: .
+  #         push: true
+  #         tags: |
+  #           ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+  #           ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
   # deploy_staging:
   #   name: Deploy & Smoke Test Staging
@@ -93,22 +93,22 @@ jobs:
   #         sleep 30
   #         curl -f ${{ secrets.STAGING_APP_URL }}
 
-  deploy_production:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    needs: deploy_staging
-    environment:
-      name: production
-      url: ${{ secrets.PRODUCTION_APP_URL }}
+  # deploy_production:
+  #   name: Deploy to Production
+  #   runs-on: ubuntu-latest
+  #   needs: deploy_staging
+  #   environment:
+  #     name: production
+  #     url: ${{ secrets.PRODUCTION_APP_URL }}
 
-    steps:
-      # Tidak perlu login ke Azure dengan Service Principal
+  #   steps:
+  #     # Tidak perlu login ke Azure dengan Service Principal
 
-      - name: Deploy ke Azure Web App Production menggunakan Publish Profile
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME_PRODUCTION }}
-          # Menggunakan Publish Profile untuk autentikasi
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_PRODUCTION }}
-          # Image sekarang menunjuk ke Docker Hub, menggunakan tag yang sama dengan staging
-          images: '${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}'
+  #     - name: Deploy ke Azure Web App Production menggunakan Publish Profile
+  #       uses: azure/webapps-deploy@v3
+  #       with:
+  #         app-name: ${{ env.AZURE_WEBAPP_NAME_PRODUCTION }}
+  #         # Menggunakan Publish Profile untuk autentikasi
+  #         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_PRODUCTION }}
+  #         # Image sekarang menunjuk ke Docker Hub, menggunakan tag yang sama dengan staging
+  #         images: '${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}'
