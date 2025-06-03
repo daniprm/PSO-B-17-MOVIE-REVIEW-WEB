@@ -17,11 +17,16 @@ const MovieList = ({ movies }: { movies: MovieType[] }) => {
         {movies?.length > 0 ? (
           movies?.map((movie: MovieType) => (
             <Grid2 size={{ xs: 6, md: 3 }} key={movie.id}>
-              <Box className="relative cursor-pointer hover:text-slate-300 hover:scale-110 transition-all duration-200">
-                <WatchlistButton movieId={movie.id} />
-                {pathname === '/watchlist' && (
-                  <WatchedButton movieId={movie.id} />
-                )}
+              <Box
+                sx={{ position: 'relative' }}
+                className="cursor-pointer hover:text-slate-300 hover:scale-110 transition-all duration-200"
+              >
+                <Box className="relative">
+                  <WatchlistButton movieId={movie.id} />
+                  {pathname === '/watchlist' && (
+                    <WatchedButton movieId={movie.id} />
+                  )}
+                </Box>
                 <Link href={`/movie/${movie.id}`} passHref>
                   <Image
                     src={movie.poster_url}

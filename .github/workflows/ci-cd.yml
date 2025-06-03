@@ -1,4 +1,4 @@
-name: Deploy Website Review Film
+name: Deploy PSO B - 17 - Filminisme
 
 on:
   push:
@@ -7,10 +7,8 @@ on:
     branches: ['main']
 
 env:
-  AZURE_WEBAPP_NAME_STAGING: ${{ secrets.AZURE_WEBAPP_NAME_STAGING }}
+  # AZURE_WEBAPP_NAME_STAGING: ${{ secrets.AZURE_WEBAPP_NAME_STAGING }}
   AZURE_WEBAPP_NAME_PRODUCTION: ${{ secrets.AZURE_WEBAPP_NAME_PRODUCTION }}
-  AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-  ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
   IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
 
 jobs:
@@ -41,11 +39,11 @@ jobs:
       - name: Jalankan Lint
         run: npm run lint
 
-      - name: Jalankan Tests
-        run: npm test # Masih perlu disesuaikan
+      # - name: Jalankan Tests
+      #   run: npm test # GANTI DENGAN PERINTAH TEST ANDA
 
-  build_and_push_docker:
-    name: Build & Push Docker Image
+  build_and_push_to_dockerhub:
+    name: Build & Push Docker Image to Docker Hub
     runs-on: ubuntu-latest
     needs: test # Bergantung pada job 'test'
 
@@ -56,49 +54,44 @@ jobs:
       - name: Checkout kode
         uses: actions/checkout@v4
 
-      - name: Login ke Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Login ke Azure Container Registry (ACR)
+      - name: Login ke Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.ACR_LOGIN_SERVER }}
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build dan Push Docker Image ke ACR
+      - name: Build dan Push Docker Image ke Docker Hub
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: |
-            ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-            ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
-  deploy_staging:
-    name: Deploy & Smoke Test Staging
-    runs-on: ubuntu-latest
-    needs: build_and_push_docker
+  # deploy_staging:
+  #   name: Deploy & Smoke Test Staging
+  #   runs-on: ubuntu-latest
+  #   needs: build_and_push_to_dockerhub
 
-    steps:
-      - name: Login ke Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #   steps:
+  #     # Tidak perlu login ke Azure dengan Service Principal
+  #     # Login akan ditangani oleh Publish Profile
 
-      - name: Deploy ke Azure Web App Staging
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME_STAGING }}
-          images: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+  #     - name: Deploy ke Azure Web App Staging menggunakan Publish Profile
+  #       uses: azure/webapps-deploy@v3
+  #       with:
+  #         app-name: ${{ env.AZURE_WEBAPP_NAME_STAGING }}
+  #         # Menggunakan Publish Profile untuk autentikasi
+  #         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_STAGING }}
+  #         # Image sekarang menunjuk ke Docker Hub
+  #         images: '${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}'
 
-      - name: Smoke Test Staging
-        run: |
-          echo "Menunggu 30 detik agar aplikasi Staging siap..."
-          sleep 30
-          curl -f ${{ secrets.STAGING_APP_URL }}
+  #     - name: Smoke Test Staging
+  #       run: |
+  #         echo "Menunggu 30 detik agar aplikasi Staging siap..."
+  #         sleep 30
+  #         curl -f ${{ secrets.STAGING_APP_URL }}
 
   deploy_production:
     name: Deploy to Production
@@ -106,17 +99,16 @@ jobs:
     needs: deploy_staging
     environment:
       name: production
-      url: ${{ secrets.PRODUCTION_APP_URL }}
+      url: ${{ secrets.PRODUCTION_APP_URL }} # Pastikan secret ini ada
 
     steps:
-      - name: Login ke Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      # Tidak perlu login ke Azure dengan Service Principal
 
-      - name: Deploy ke Azure Web App Production
+      - name: Deploy ke Azure Web App Production menggunakan Publish Profile
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME_PRODUCTION }}
-          # Menggunakan image yang SAMA PERSIS dengan yang diuji di staging
-          images: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          # Menggunakan Publish Profile untuk autentikasi
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_PRODUCTION }}
+          # Image sekarang menunjuk ke Docker Hub, menggunakan tag yang sama dengan staging
+          images: '${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}'

@@ -22,38 +22,26 @@ const WatchedButton = ({ movieId }: { movieId: string }) => {
     fetchData();
   }, [movieId]);
 
-  const handleAddWatched = () => {
-    if (isInWatched) {
-      fetch(`http://localhost:5000/watched/${movieId}`, {
-        method: 'DELETE',
-      });
-      fetch('http://localhost:5000/watchlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: movieId }),
-      });
-      setIsInWatched(false);
-    } else {
-      fetch('http://localhost:5000/watched', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: movieId }),
-      });
-      fetch(`http://localhost:5000/watchlist/${movieId}`, {
-        method: 'DELETE',
-      });
-      setIsInWatched(true);
-    }
+  const handleAddWatched = async () => {
+    // if (isInWatched) {
+    //   await supabase
+    //     .from('watchlist')
+    //     .update({ isWatched: false })
+    //     .eq('movie_id', movieId); // perlu userId
+    //   setIsInWatched(false);
+    // } else {
+    //   await supabase
+    //     .from('watchlist')
+    //     .update({ isWatched: true })
+    //     .eq('movie_id', movieId); // perlu userId
+    //   setIsInWatched(true);
+    // }
   };
 
   return isInWatched ? (
     <Button
       variant="contained"
-      className={'absolute top-2 left-2 font-bold'}
+      sx={{ position: 'absolute', top: 10, left: 10, fontWeight: 'bold' }}
       onClick={() => handleAddWatched()}
     >
       Watched
@@ -61,9 +49,15 @@ const WatchedButton = ({ movieId }: { movieId: string }) => {
   ) : (
     <Button
       variant="contained"
-      className={
-        'absolute top-2 left-2 font-bold bg-white text-[#0079FF] border-2 hover:bg-white/85'
-      }
+      sx={{
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        fontWeight: 'bold',
+        color: '#0079FF',
+        backgroundColor: 'white',
+        '&:hover': { backgroundColor: 'white/85' },
+      }}
       onClick={() => handleAddWatched()}
     >
       Watch

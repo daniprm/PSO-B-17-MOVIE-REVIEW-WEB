@@ -23,31 +23,39 @@ const WatchlistButton = ({ movieId }: { movieId: string }) => {
     fetchData();
   }, [movieId]);
 
-  const handleAddWatchlist = () => {
-    if (isInWatchlist) {
-      fetch(`http://localhost:5000/watchlist/${movieId}`, {
-        method: 'DELETE',
-      });
-      setIsInWatchlist(false);
-    } else {
-      fetch('http://localhost:5000/watchlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: movieId }),
-      });
-      setIsInWatchlist(true);
-    }
+  const handleAddWatchlist = async () => {
+    // if (isInWatchlist) {
+    //   await supabase.from('watchlist').delete().eq('movie_id', movieId); // perlu userId
+    //   setIsInWatchlist(false);
+    // } else {
+    //   await supabase.from('watchlist').insert({ movie_id: movieId }); // perlu userId
+    //   setIsInWatchlist(true);
+    // }
   };
 
   return (
     <IconButton
-      className={`absolute top-2 right-2 ${
+      sx={
         isInWatchlist
-          ? 'bg-[#CA3E47] hover:bg-[#CA3E47]/80'
-          : 'bg-black/65 hover:bg-black'
-      }`}
+          ? {
+              position: 'absolute',
+              top: 10,
+              right: 10,
+              backgroundColor: '#CA3E47',
+              '&:hover': {
+                backgroundColor: '#CA3E47',
+              },
+            }
+          : {
+              position: 'absolute',
+              top: 10,
+              right: 10,
+              backgroundColor: 'rgba(0, 0, 0, 0.65)',
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.65)',
+              },
+            }
+      }
       onClick={() => handleAddWatchlist()}
     >
       {isInWatchlist ? (

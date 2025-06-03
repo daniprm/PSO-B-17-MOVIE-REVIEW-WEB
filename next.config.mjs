@@ -1,12 +1,9 @@
+// next.config.mjs atau next.config.js
 /** @type {import('next').NextConfig} */
+// next.config.js
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "image.tmdb.org",
-      },
-    ],
+    domains: ['image.tmdb.org'],
   },
 };
 
