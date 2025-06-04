@@ -41,8 +41,8 @@ jobs:
       - name: Jalankan Lint
         run: npm run lint
 
-      # - name: Jalankan Tests
-      #   run: npm test # GANTI DENGAN PERINTAH TEST ANDA
+      - name: Jalankan Tests
+        run: npm test
 
   build_and_push_to_dockerhub:
     name: Build & Push Docker Image to Docker Hub
