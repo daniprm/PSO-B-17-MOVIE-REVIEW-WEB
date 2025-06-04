@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -101,6 +102,16 @@ export default function UserRegisterPage() {
         >
           Register
         </Button>
+
+        <Typography color="text.primary" variant="body2" align="center" sx={{ mt: 2 }}>
+            sudah punya akun?{' '}
+            <Link href="/login" passHref>
+                <Typography component="span" color="text.primary" sx={{ cursor: 'pointer', fontWeight: 400 }}>
+                    Login
+                </Typography>
+            </Link>
+        </Typography>
+        
       </Box>
     </Container>
   );
