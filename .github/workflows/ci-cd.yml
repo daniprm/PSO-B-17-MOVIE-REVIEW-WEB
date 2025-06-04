@@ -86,10 +86,10 @@ jobs:
       - name: Deploy ke Azure Web App Staging
         uses: azure/webapps-deploy@v3
         with:
-          app-name: ${{env.AZURE_WEBAPP_NAME_PRODUCTION}}
-          slot-name: ${{env.AZURE_WEBAPP_NAME_STAGING}}
+          app-name: ${{env.AZURE_WEBAPP_NAME_STAGING}}
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_STAGING }}
           images: '${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}'
+          slot-name: ${{env.AZURE_WEBAPP_NAME_STAGING}}
 
       - name: Smoke Test Staging
         run: |
