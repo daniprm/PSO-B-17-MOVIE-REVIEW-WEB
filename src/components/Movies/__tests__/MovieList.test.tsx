@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import MovieList from '../MovieList';
 import { MovieType } from '@/types/Movie/MovieType';
 import '@testing-library/jest-dom';
-import Image from 'next/image';
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
@@ -12,42 +11,50 @@ jest.mock('next/navigation', () => ({
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt }: {src: string, alt: string}) => <Image src={src} alt={alt} />,
+  default: ({ src, alt }: { src: string; alt: string }) => (
+    <img src={src} alt={alt} />
+  ),
 }));
 
 // Mock tombol Watchlist
 jest.mock('@/components/Buttons/WatchlistButton/WatchlistButton', () => ({
   __esModule: true,
-  default: ({ movieId }: { movieId: string }) => <button>Watchlist-{movieId}</button>,
+  default: ({ movieId }: { movieId: string }) => (
+    <button>Watchlist-{movieId}</button>
+  ),
 }));
 
 describe('MovieList Component', () => {
   const mockMovies: MovieType[] = [
     {
-    id: '1',
-    title: 'Inception',
-    year: 2010,
-    poster_url: 'https://image.tmdb.org/t/p/original/ljsZTbVsrQSqZgWeep2B1QiDKuh.jpg',
-    created_at: '2025-05-24 12:59:36.723082+00',
-    genres_id: 1,
-    rating: 8.8,
-    description: 'A thief who enters the dreams of others to steal secrets from their subconscious.',
-    director: 'Christopher Nolan',
-    actors_id: 1,
-    genre: ['Action'],
+      id: '1',
+      title: 'Inception',
+      year: 2010,
+      poster_url:
+        'https://image.tmdb.org/t/p/original/ljsZTbVsrQSqZgWeep2B1QiDKuh.jpg',
+      created_at: '2025-05-24 12:59:36.723082+00',
+      genres_id: 1,
+      rating: 8.8,
+      description:
+        'A thief who enters the dreams of others to steal secrets from their subconscious.',
+      director: 'Christopher Nolan',
+      actors_id: 1,
+      genre: ['Action'],
     },
     {
-    id: '2',
-    title: 'BoiBoyboi',
-    year: 2010,
-    poster_url: 'https://image.tmdb.org/t/p/original/ljsZTbVsrQSqZgWeep2B1QiDKuh.jpg',
-    created_at: '2025-05-24 12:59:36.723082+00',
-    genres_id: 1,
-    rating: 8.8,
-    description: 'A thief who enters the dreams of others to steal secrets from their subconscious.',
-    director: 'Christopher Nolan',
-    actors_id: 1,
-    genre: ['Action'],
+      id: '2',
+      title: 'BoiBoyboi',
+      year: 2010,
+      poster_url:
+        'https://image.tmdb.org/t/p/original/ljsZTbVsrQSqZgWeep2B1QiDKuh.jpg',
+      created_at: '2025-05-24 12:59:36.723082+00',
+      genres_id: 1,
+      rating: 8.8,
+      description:
+        'A thief who enters the dreams of others to steal secrets from their subconscious.',
+      director: 'Christopher Nolan',
+      actors_id: 1,
+      genre: ['Action'],
     },
   ];
 
