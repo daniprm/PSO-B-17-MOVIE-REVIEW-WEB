@@ -4,33 +4,48 @@ import React, { useEffect, useState } from 'react';
 import { IconButton } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { supabase } from '@/db/supabaseClient';
+import { createClient } from '@/Utilities/supabase/client';
 
 const WatchlistButton = ({ movieId }: { movieId: string }) => {
   const [isInWatchlist, setIsInWatchlist] = useState(false);
+  const [userId, setUserId] = useState<string | undefined>(undefined);
+  const supabase = createClient();
   useEffect(() => {
     const fetchData = async () => {
-      const { data: watchlistId } = await supabase
-        .from('watchlist')
-        .select('movie_id');
+      const { data: user } = await supabase.auth.getUser();
 
-      const watchlistIdFound = watchlistId?.find(
-        (item) => item.movie_id === movieId
-      );
-
-      if (watchlistIdFound) setIsInWatchlist(true);
+      setUserId(user.user?.id);
+      if (userId) {
+        const { data: watchlistId } = await supabase
+          .from('watchlist')
+          .select('movie_id')
+          .eq('user_id', userId);
+        const watchlistIdFound = watchlistId?.find(
+          (item) => item.movie_id === movieId
+        );
+        if (watchlistIdFound) setIsInWatchlist(true);
+      }
     };
     fetchData();
-  }, [movieId]);
+  }, [supabase, userId, movieId]);
 
   const handleAddWatchlist = async () => {
-    // if (isInWatchlist) {
-    //   await supabase.from('watchlist').delete().eq('movie_id', movieId); // perlu userId
-    //   setIsInWatchlist(false);
-    // } else {
-    //   await supabase.from('watchlist').insert({ movie_id: movieId }); // perlu userId
-    //   setIsInWatchlist(true);
-    // }
+    if (isInWatchlist) {
+      const { error } = await supabase
+        .from('watchlist')
+        .delete()
+        .eq('movie_id', movieId)
+        .eq('user_id', userId);
+      if (error) throw error;
+
+      setIsInWatchlist(false);
+    } else {
+      const { error } = await supabase
+        .from('watchlist')
+        .insert({ movie_id: movieId, user_id: userId });
+      if (error) throw error;
+      setIsInWatchlist(true);
+    }
   };
 
   return (
@@ -57,6 +72,7 @@ const WatchlistButton = ({ movieId }: { movieId: string }) => {
             }
       }
       onClick={() => handleAddWatchlist()}
+      disabled={!userId}
     >
       {isInWatchlist ? (
         <FavoriteIcon className="text-white" />
