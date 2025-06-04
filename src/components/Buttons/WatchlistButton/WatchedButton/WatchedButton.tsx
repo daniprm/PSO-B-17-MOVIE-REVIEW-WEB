@@ -2,16 +2,21 @@
 
 import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
-import { supabase } from '@/db/supabaseClient';
+import { createClient } from '@/Utilities/supabase/client';
 
 const WatchedButton = ({ movieId }: { movieId: string }) => {
   const [isInWatched, setIsInWatched] = useState(false);
+  const [userId, setUserId] = useState<string | undefined>(undefined);
+  const supabase = createClient();
+
   useEffect(() => {
     const fetchData = async () => {
+      setUserId((await supabase.auth.getUser()).data.user?.id);
       const { data: watchedId } = await supabase
         .from('watchlist')
         .select('movie_id')
-        .eq('isWatched', true);
+        .eq('isWatched', true)
+        .eq('user_id', userId);
 
       const WatchedIdFound = watchedId?.find(
         (item) => item.movie_id === movieId
@@ -20,22 +25,24 @@ const WatchedButton = ({ movieId }: { movieId: string }) => {
       if (WatchedIdFound) setIsInWatched(true);
     };
     fetchData();
-  }, [movieId]);
+  }, [supabase, userId, movieId]);
 
   const handleAddWatched = async () => {
-    // if (isInWatched) {
-    //   await supabase
-    //     .from('watchlist')
-    //     .update({ isWatched: false })
-    //     .eq('movie_id', movieId); // perlu userId
-    //   setIsInWatched(false);
-    // } else {
-    //   await supabase
-    //     .from('watchlist')
-    //     .update({ isWatched: true })
-    //     .eq('movie_id', movieId); // perlu userId
-    //   setIsInWatched(true);
-    // }
+    if (isInWatched) {
+      await supabase
+        .from('watchlist')
+        .update({ isWatched: false })
+        .eq('movie_id', movieId)
+        .eq('user_id', userId);
+      setIsInWatched(false);
+    } else {
+      await supabase
+        .from('watchlist')
+        .update({ isWatched: true })
+        .eq('movie_id', movieId)
+        .eq('user_id', userId);
+      setIsInWatched(true);
+    }
   };
 
   return isInWatched ? (
