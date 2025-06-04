@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import MovieList from '../MovieList';
 import { MovieType } from '@/types/Movie/MovieType';
 import '@testing-library/jest-dom';
+import Image from 'next/image';
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
@@ -11,7 +12,7 @@ jest.mock('next/navigation', () => ({
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt }: any) => <img src={src} alt={alt} />,
+  default: ({ src, alt }: {src: string, alt: string}) => <Image src={src} alt={alt} />,
 }));
 
 // Mock tombol Watchlist
