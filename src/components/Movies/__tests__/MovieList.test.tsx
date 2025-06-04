@@ -35,14 +35,26 @@ describe('MovieList Component', () => {
     actors_id: 1,
     genre: ['Action'],
     },
+    {
+    id: '2',
+    title: 'BoiBoyboi',
+    year: 2010,
+    poster_url: 'https://image.tmdb.org/t/p/original/ljsZTbVsrQSqZgWeep2B1QiDKuh.jpg',
+    created_at: '2025-05-24 12:59:36.723082+00',
+    genres_id: 1,
+    rating: 8.8,
+    description: 'A thief who enters the dreams of others to steal secrets from their subconscious.',
+    director: 'Christopher Nolan',
+    actors_id: 1,
+    genre: ['Action'],
+    },
   ];
 
   it('renders movies correctly', () => {
     render(<MovieList movies={mockMovies} />);
 
-    expect(screen.getByText(/Inception/i)).toBeInTheDocument();
-    expect(screen.getByAltText(/Inception/i)).toBeInTheDocument();
-    expect(screen.getByText(/Watchlist-1/i)).toBeInTheDocument();
+    expect(screen.getByText(/BoiBoyboi/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/BoiBoyboi/i)).toBeInTheDocument();
   });
 
   it('renders "No movies available" when list is empty', () => {
