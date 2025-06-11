@@ -74,17 +74,6 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
-      - name: Jalankan Cypress Tests
-        uses: cypress-io/github-action@v6
-        with:
-          start: npm start
-          wait-on: 'http://localhost:3000'
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-          CYPRESS_userEmail: ${{ secrets.CYPRESS_USER_EMAIL }}
-          CYPRESS_userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
-
       - name: Upload Artefak Build
         uses: actions/upload-artifact@v4
         with:
@@ -99,7 +88,17 @@ jobs:
             tailwind.config.ts
             tsconfig.json
             src/middleware.ts
-          if-no-files-found: error
+
+      - name: Jalankan Cypress Tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          wait-on: 'http://localhost:3000'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          CYPRESS_userEmail: ${{ secrets.CYPRESS_USER_EMAIL }}
+          CYPRESS_userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
 
   build_and_push_to_dockerhub:
     name: Build & Push Docker Image from Artifact
