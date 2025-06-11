@@ -39,7 +39,7 @@ jobs:
         run: npm test # GANTI DENGAN PERINTAH TEST ANDA
 
   build_and_integration_test:
-    name: Build & Cypress Integration Tests
+    name: Build Next.js App & Cypress Integration Tests
     runs-on: ubuntu-latest
     needs: lint_and_unit_test
 
@@ -58,7 +58,17 @@ jobs:
       - name: Install dependensi
         run: npm ci
 
+      - name: Cache folder .next
+        id: next-cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
+
       - name: Build Next.js App
+        if: steps.next-cache.outputs.cache-hit != 'true'
         run: npm run build
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
@@ -89,7 +99,7 @@ jobs:
             tailwind.config.ts
             tsconfig.json
             src/middleware.ts
-          if-no-files-found: warn
+          if-no-files-found: error
 
   build_and_push_to_dockerhub:
     name: Build & Push Docker Image from Artifact
