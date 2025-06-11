@@ -7,6 +7,13 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+COPY package.json package-lock.json* ./
+
+RUN npm ci --omit=dev
+
+COPY --chown=nextjs:nodejs .next ./.next
+COPY --chown=nextjs:nodejs next.config.mjs .
+
 COPY --chown=nextjs:nodejs . .
 
 RUN chmod +x /app/node_modules/.bin/next
