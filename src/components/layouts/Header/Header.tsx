@@ -10,6 +10,7 @@ const Header = ({ children }: React.PropsWithChildren) => {
           color: "text.primary",
           fontWeight: "bold",
         }}
+        data-cy="search-results-header"
       >
         {children}
       </Typography>

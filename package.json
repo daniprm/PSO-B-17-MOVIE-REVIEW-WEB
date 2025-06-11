@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -30,6 +32,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/testing-library__react": "^10.2.0",
+    "cypress": "^14.4.1",
     "dotenv-cli": "^8.0.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.13",

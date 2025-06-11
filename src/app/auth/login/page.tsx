@@ -37,6 +37,7 @@ export default function UserLoginPage() {
         <TextField
           fullWidth
           label="Email"
+          inputProps={{ 'data-cy': 'login-email-input' }}
           margin="normal"
           onChange={(e) => setEmail(e.target.value)}
           InputLabelProps={{ shrink: true }}
@@ -50,6 +51,7 @@ export default function UserLoginPage() {
           fullWidth
           label="Password"
           type="password"
+          inputProps={{ 'data-cy': 'login-password-input' }}
           margin="normal"
           onChange={(e) => setPassword(e.target.value)}
           InputLabelProps={{ shrink: true }}
@@ -65,6 +67,7 @@ export default function UserLoginPage() {
           color="primary"
           sx={{ mt: 2 }}
           onClick={handleLogin}
+          data-cy="login-button"
         >
           Login
         </Button>
