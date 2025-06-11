@@ -76,9 +76,9 @@ jobs:
 
       - name: Upload Artefak Build
         uses: actions/upload-artifact@v4
-        include-hidden-files: true
         with:
-          name: build-output
+          name: nextjs-build-output
+          include-hidden-files: true
           path: |
             .next
             node_modules
@@ -114,7 +114,7 @@ jobs:
       - name: Download Artefak Build
         uses: actions/download-artifact@v4
         with:
-          name: build-output
+          name: nextjs-build-output
 
       - name: Login ke Docker Hub
         uses: docker/login-action@v3
