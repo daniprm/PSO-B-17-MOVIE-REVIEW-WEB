@@ -58,17 +58,17 @@ jobs:
       - name: Install dependensi
         run: npm ci
 
-      - name: Cache folder .next
-        id: next-cache
-        uses: actions/cache@v4
-        with:
-          path: .next/cache
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
+      # - name: Cache folder .next
+      #   id: next-cache
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: .next/cache
+      #     key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
 
       - name: Build Next.js App
-        if: steps.next-cache.outputs.cache-hit != 'true'
+        # if: steps.next-cache.outputs.cache-hit != 'true'
         run: npm run build
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
@@ -76,6 +76,7 @@ jobs:
 
       - name: Upload Artefak Build
         uses: actions/upload-artifact@v4
+        include-hidden-files: true
         with:
           name: build-output
           path: |
