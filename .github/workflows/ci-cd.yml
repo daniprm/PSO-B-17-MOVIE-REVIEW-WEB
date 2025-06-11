@@ -14,19 +14,16 @@ env:
   STAGING_APP_URL: ${{secrets.STAGING_APP_URL}}
 
 jobs:
-  test:
-    name: Lint & Test
+  lint_and_unit_test:
+    name: Lint & Unit Tests
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout kode
         uses: actions/checkout@v4
-
-      - name: Setup Node.js v20
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-
       - name: Cache dependensi
         uses: actions/cache@v4
         with:
@@ -34,15 +31,35 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      - name: Install dependensi
+        run: npm ci
+      - name: Jalankan Lint
+        run: npm run lint
+      - name: Jalankan Unit Tests (jika ada)
+        run: npm test # GANTI DENGAN PERINTAH TEST ANDA
 
+  build_and_integration_test:
+    name: Build & Cypress Integration Tests
+    runs-on: ubuntu-latest
+    needs: lint_and_unit_test
+
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: Cache dependensi
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependensi
         run: npm ci
 
-      - name: Jalankan Lint
-        run: npm run lint
-
-      - name: Jalankan Tests
-        run: npm test
+      - name: Build Next.js App
+        run: npm run build
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
@@ -50,13 +67,11 @@ jobs:
       - name: Jalankan Cypress Tests
         uses: cypress-io/github-action@v6
         with:
-          build: npm run build
           start: npm start
           wait-on: 'http://localhost:3000'
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-
           CYPRESS_userEmail: ${{ secrets.CYPRESS_USER_EMAIL }}
           CYPRESS_userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
 
@@ -79,7 +94,7 @@ jobs:
   build_and_push_to_dockerhub:
     name: Build & Push Docker Image from Artifact
     runs-on: ubuntu-latest
-    needs: test
+    needs: build_and_integration_test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
