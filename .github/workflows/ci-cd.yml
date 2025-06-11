@@ -47,17 +47,43 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
-  build_and_push_to_dockerhub:
-    name: Build & Push Docker Image to Docker Hub
-    runs-on: ubuntu-latest
-    needs: test # Bergantung pada job 'test'
+      - name: Jalankan Cypress Tests
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm start
+          wait-on: 'http://localhost:3000'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
-    # Hanya berjalan jika ada push ke branch 'main'
+          CYPRESS_userEmail: ${{ secrets.CYPRESS_USER_EMAIL }}
+          CYPRESS_userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
+
+      - name: Upload Artefak Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: |
+            .next
+            node_modules
+            package.json
+            # Sertakan file lain yang dibutuhkan untuk 'npm start'
+
+  build_and_push_to_dockerhub:
+    name: Build & Push Docker Image from Artifact
+    runs-on: ubuntu-latest
+    needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout kode
         uses: actions/checkout@v4
+
+      - name: Download Artefak Build
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
 
       - name: Login ke Docker Hub
         uses: docker/login-action@v3
@@ -65,14 +91,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build dan Push Docker Image ke Docker Hub
+      - name: Build dan Push Docker Image menggunakan Artefak
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: Dockerfile
           push: true
-          build-args: |
-            NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-            NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
@@ -100,7 +124,6 @@ jobs:
           sleep 60
           curl -f ${{ env.STAGING_APP_URL }}
 
-  # Test v5
   deploy_production:
     name: Deploy to Production
     runs-on: ubuntu-latest
