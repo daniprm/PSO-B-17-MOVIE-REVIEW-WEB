@@ -5,7 +5,7 @@ export default async function Home() {
   return (
     <>
       <AppShell>
-        <MovieListView />
+        <MovieListView data-cy="movie-list-container"/>
       </AppShell>
     </>
   );

@@ -123,7 +123,7 @@ export default function SearchAppBar() {
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Cari Film..."
-                inputProps={{ 'aria-label': 'search' }}
+                inputProps={{ 'aria-label': 'search', 'data-cy': 'search-input' }}
                 inputRef={searchRef}
                 onKeyDown={handleSearch}
               />
