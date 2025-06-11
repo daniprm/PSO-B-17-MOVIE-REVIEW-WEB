@@ -9,7 +9,7 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --chown=nextjs:nodejs . .
 
-ENV PATH /app/node_modules/.bin:$PATH
+RUN chmod +x /app/node_modules/.bin/next
 
 USER nextjs
 
