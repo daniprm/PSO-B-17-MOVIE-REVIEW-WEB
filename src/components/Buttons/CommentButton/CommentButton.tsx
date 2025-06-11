@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { createClient } from '@/Utilities/supabase/server';
+import { createClient } from '@/Utilities/supabase/client';
 import { supabase } from '@/db/supabaseClient';
 
 interface PropsType {
