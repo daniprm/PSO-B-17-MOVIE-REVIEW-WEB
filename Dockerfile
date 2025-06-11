@@ -9,8 +9,10 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --chown=nextjs:nodejs . .
 
+ENV PATH /app/node_modules/.bin:$PATH
+
 USER nextjs
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["next", "start"]
