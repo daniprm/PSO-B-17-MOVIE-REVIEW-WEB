@@ -71,14 +71,9 @@ jobs:
           include-hidden-files: true
           path: |
             .next
-            node_modules
             package.json
             package-lock.json
             next.config.mjs
-            postcss.config.mjs
-            tailwind.config.ts
-            tsconfig.json
-            src/middleware.ts
 
       - name: Jalankan Cypress Tests
         uses: cypress-io/github-action@v6
