@@ -136,8 +136,8 @@ jobs:
 
       - name: Smoke Test Staging
         run: |
-          echo "Menunggu 5 menit untuk aplikasi Staging siap..."
-          sleep 300
+          echo "Menunggu 60 detik untuk aplikasi Staging siap..."
+          sleep 60
           curl -f ${{ env.STAGING_APP_URL }}
 
   deploy_production:
