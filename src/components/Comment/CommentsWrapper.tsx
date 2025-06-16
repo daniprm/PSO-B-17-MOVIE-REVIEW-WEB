@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import Comments from './Comments';
 import { CommentType } from '@/types/Comment/CommentType';
 import { supabase } from '@/db/supabaseClient';
+import { createClient } from '@/Utilities/supabase/client';
+const supabaseClient = createClient();
 
 const CommentsWrapper = ({
   movieId,
@@ -17,6 +19,8 @@ const CommentsWrapper = ({
   const [comments, setComments] = useState<CommentType[]>(commentsData);
   const [idComment, setIdComment] = useState<number | null>(null);
   const [editedComment, setEditedComment] = useState<string>('');
+  const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [currentUserEmail, setCurrentUserEmail] = useState<string>('');
 
   const handleEditComment = (idComment: number) => {
     setIdComment(idComment);
@@ -28,7 +32,14 @@ const CommentsWrapper = ({
         .from('comments')
         .select()
         .eq('movie_id', movieId);
+      const {
+        data: { user },
+      } = await supabaseClient.auth.getUser();
+      const userId = await user?.id;
+      const currentUserEmail = await user?.email;
 
+      setUserId(userId);
+      setCurrentUserEmail(currentUserEmail!);
       setComments(data!);
     } catch (error) {
       console.error('Error fetching comments:', error);
@@ -46,6 +57,7 @@ const CommentsWrapper = ({
         setComment={setComment}
         movieId={movieId}
         fetchComments={fetchComments}
+        userId={userId!}
       />
       <Comments
         {...{
@@ -56,6 +68,7 @@ const CommentsWrapper = ({
           setEditedComment,
           handleEditComment,
           fetchComments,
+          currentUserEmail,
         }}
       />
     </>

@@ -4,4 +4,5 @@ export interface CommentType {
   movieId: number;
   comment: string;
   user_id: string;
+  email: string;
 }

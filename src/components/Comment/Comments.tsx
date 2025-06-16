@@ -8,6 +8,7 @@ interface PropsType {
   comments: {
     id: number;
     comment: string;
+    email: string;
   }[];
   idComment: number | null;
   setIdComment: React.Dispatch<React.SetStateAction<number | null>>;
@@ -15,6 +16,7 @@ interface PropsType {
   setEditedComment: React.Dispatch<React.SetStateAction<string>>;
   handleEditComment: (idComment: number) => void;
   fetchComments: () => void;
+  currentUserEmail: string;
 }
 
 const Comments = ({
@@ -25,17 +27,24 @@ const Comments = ({
   setEditedComment,
   handleEditComment,
   fetchComments,
+  currentUserEmail,
 }: PropsType) => {
   return (
     <Box className="pt-12 pl-[57px] pr-[25px]">
       {comments?.map((c) => (
         <Box key={c.id} className="relative ">
+          <Typography sx={{ color: 'text.primary', fontWeight: 'bold' }}>
+            {c.email}
+          </Typography>
           <Box
             className="flex flex-row gap-2 mb-3 pb-4 border-b-[1px] "
             sx={{ borderColor: 'text.primary' }}
           >
             <AccountCircleIcon
-              sx={{ color: 'text.primary' }}
+              sx={{
+                color: 'text.primary',
+                mt: '12px',
+              }}
               className="text-5xl"
             />
             {idComment === c.id ? (
@@ -69,19 +78,20 @@ const Comments = ({
             )}
           </Box>
 
-          {idComment !== c.id && (
-            <IconButton
-              className="absolute top-[-4px] right-0"
-              title="Edit"
-              onClick={() => handleEditComment(c.id)}
-            >
-              <EditIcon className="text-sm" />
-            </IconButton>
+          {idComment !== c.id && c.email === currentUserEmail && (
+            <>
+              <IconButton
+                className="absolute top-[-4px] right-0"
+                title="Edit"
+                onClick={() => handleEditComment(c.id)}
+              >
+                <EditIcon className="text-sm" />
+              </IconButton>
+              <DeleteButton commentId={c.id} onDeleteComment={fetchComments} />
+            </>
           )}
 
-          <DeleteButton commentId={c.id} onDeleteComment={fetchComments} />
-
-          {idComment === c.id && (
+          {idComment === c.id && c.email === currentUserEmail && (
             <Box className="flex flex-row gap-3 justify-end">
               <Button
                 variant="outlined"

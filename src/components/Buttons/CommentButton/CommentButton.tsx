@@ -1,5 +1,4 @@
 import { Button } from '@mui/material';
-import { createClient } from '@/Utilities/supabase/client';
 import { supabase } from '@/db/supabaseClient';
 
 interface PropsType {
@@ -7,17 +6,16 @@ interface PropsType {
   comment?: string;
   onCommentAdded: () => void;
   setComment: React.Dispatch<React.SetStateAction<string>>;
+  userId: string;
 }
 
-const CommentButton = async ({
+const CommentButton = ({
   movieId,
   comment,
   onCommentAdded,
   setComment,
+  userId,
 }: PropsType) => {
-  const supabaseServer = createClient();
-  const user = (await supabaseServer).auth.getUser();
-  const userId = (await user).data.user?.id;
   const handleComment = async () => {
     if (comment) {
       const { error } = await supabase

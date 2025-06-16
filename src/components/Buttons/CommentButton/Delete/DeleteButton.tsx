@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { useState } from 'react';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { supabase } from '@/db/supabaseClient';
 
 interface PropsType {
   commentId: number;
@@ -14,13 +15,13 @@ interface PropsType {
 }
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid white",
+  bgcolor: 'background.paper',
+  border: '2px solid white',
   boxShadow: 24,
   p: 4,
 };
@@ -85,17 +86,19 @@ function TransitionsModal({
 const DeleteButton = ({ commentId, onDeleteComment }: PropsType) => {
   const [open, setOpen] = useState(false);
 
-  const handleDelete = () => {
-    fetch(`http://localhost:5000/comments/${commentId}`, {
-      method: "DELETE",
-    });
+  const handleDelete = async () => {
+    const { error } = await supabase
+      .from('comments')
+      .delete()
+      .eq('id', commentId);
+    if (error) throw error;
     onDeleteComment();
   };
 
   return (
     <>
       <IconButton
-        className="absolute top-8 right-0"
+        className="absolute top-[-4px] right-0 "
         title="Delete"
         onClick={() => setOpen(true)}
       >
