@@ -18,7 +18,6 @@ const MovieDetailPage = async ({ movie }: { movie: MovieType }) => {
   }
 
   const movieCastId: number[] = actorId.map((item) => item.actor_id);
-  console.log(movieCastId);
 
   const { data: genresData, error: genreError } = await supabase
     .from('mov_genres')

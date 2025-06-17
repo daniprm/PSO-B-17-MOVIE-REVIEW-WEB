@@ -9,6 +9,7 @@ interface PropsType {
     id: number;
     comment: string;
     email: string;
+    created_at: string;
   }[];
   idComment: number | null;
   setIdComment: React.Dispatch<React.SetStateAction<number | null>>;
@@ -33,9 +34,6 @@ const Comments = ({
     <Box className="pt-12 pl-[57px] pr-[25px]">
       {comments?.map((c) => (
         <Box key={c.id} className="relative ">
-          <Typography sx={{ color: 'text.primary', fontWeight: 'bold' }}>
-            {c.email}
-          </Typography>
           <Box
             className="flex flex-row gap-2 mb-3 pb-4 border-b-[1px] "
             sx={{ borderColor: 'text.primary' }}
@@ -43,39 +41,60 @@ const Comments = ({
             <AccountCircleIcon
               sx={{
                 color: 'text.primary',
-                mt: '12px',
+                mt: '16px',
               }}
-              className="text-5xl"
             />
-            {idComment === c.id ? (
-              <TextField
-                sx={{
-                  color: 'red',
-
-                  pr: '36px',
-                  pt: '12px',
-                }}
-                defaultValue={c.comment}
-                variant="standard"
-                multiline
-                fullWidth
-                InputProps={{ disableUnderline: true }}
-                onChange={(e) => setEditedComment(e.target.value)}
-              />
-            ) : (
-              <Typography
-                variant="body1"
+            <Box>
+              <Box
                 sx={{
                   color: 'text.primary',
-                  wordBreak: 'break-word',
-                  whiteSpace: 'normal',
                   pr: '36px',
                   pt: '12px',
+                  display: 'flex',
+                  gap: '4px',
                 }}
               >
-                {c.comment}
-              </Typography>
-            )}
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.primary',
+                    wordBreak: 'break-word',
+                    whiteSpace: 'normal',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {c.email}
+                </Typography>
+                {'· ' + c.created_at.slice(0, 10)}
+              </Box>
+              {idComment === c.id ? (
+                <TextField
+                  sx={{
+                    color: 'red',
+
+                    pr: '36px',
+                  }}
+                  defaultValue={c.comment}
+                  variant="standard"
+                  multiline
+                  fullWidth
+                  InputProps={{ disableUnderline: true }}
+                  onChange={(e) => setEditedComment(e.target.value)}
+                />
+              ) : (
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.primary',
+                    wordBreak: 'break-word',
+                    whiteSpace: 'normal',
+                    pr: '36px',
+                  }}
+                >
+                  {c.comment}
+                </Typography>
+              )}
+            </Box>
           </Box>
 
           {idComment !== c.id && c.email === currentUserEmail && (
