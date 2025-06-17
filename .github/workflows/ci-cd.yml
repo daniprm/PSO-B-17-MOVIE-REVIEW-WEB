@@ -35,8 +35,8 @@ jobs:
         run: npm ci
       - name: Jalankan Lint
         run: npm run lint
-      - name: Jalankan Unit Tests (jika ada)
-        run: npm test # GANTI DENGAN PERINTAH TEST ANDA
+      - name: Jalankan Unit Tests
+        run: npm test
 
   build_and_integration_test:
     name: Build Next.js App & Cypress Integration Tests
