@@ -15,6 +15,7 @@ COPY --chown=nextjs:nodejs .next ./.next
 COPY --chown=nextjs:nodejs next.config.mjs .
 
 COPY --chown=nextjs:nodejs . .
+
 RUN chmod +x /app/node_modules/.bin/next
 
 USER nextjs
