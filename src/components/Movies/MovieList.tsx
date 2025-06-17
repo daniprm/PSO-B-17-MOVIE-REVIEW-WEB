@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import WatchedButton from '../Buttons/WatchlistButton/WatchedButton/WatchedButton';
 
 const MovieList = ({ movies }: { movies: MovieType[] }) => {
+  console.log(movies);
   const pathname = usePathname();
 
   return (

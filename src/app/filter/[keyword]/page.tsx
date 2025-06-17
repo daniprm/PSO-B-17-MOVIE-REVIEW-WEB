@@ -6,13 +6,19 @@ import MovieList from '@/components/Movies/MovieList';
 import { supabase } from '@/db/supabaseClient';
 
 const MovieContent = async ({ keyword }: { keyword: string }) => {
-  const { data: movies, error } = await supabase
-    .from('movies')
-    .select(`*, mov_genres(genre(name))`)
-    .ilike('mov_genres.genre.name', `${keyword}`);
+  const { data, error } = await supabase
+    .from('genre')
+    .select(`name, mov_genres(movies(*))`)
+    .ilike('name', `%${keyword}%`);
   if (error) {
     return <MovieList movies={[]} />;
   }
+
+  const movies = data
+    ?.map((item) => item.mov_genres)
+    .flat()
+    .map((item) => item.movies)
+    .flat();
   return <MovieList movies={movies} />;
 };
 
