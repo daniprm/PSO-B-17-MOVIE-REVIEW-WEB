@@ -8,6 +8,8 @@ interface PropsType {
   comments: {
     id: number;
     comment: string;
+    email: string;
+    created_at: string;
   }[];
   idComment: number | null;
   setIdComment: React.Dispatch<React.SetStateAction<number | null>>;
@@ -15,6 +17,7 @@ interface PropsType {
   setEditedComment: React.Dispatch<React.SetStateAction<string>>;
   handleEditComment: (idComment: number) => void;
   fetchComments: () => void;
+  currentUserEmail: string;
 }
 
 const Comments = ({
@@ -25,6 +28,7 @@ const Comments = ({
   setEditedComment,
   handleEditComment,
   fetchComments,
+  currentUserEmail,
 }: PropsType) => {
   return (
     <Box className="pt-12 pl-[57px] pr-[25px]">
@@ -35,53 +39,78 @@ const Comments = ({
             sx={{ borderColor: 'text.primary' }}
           >
             <AccountCircleIcon
-              sx={{ color: 'text.primary' }}
-              className="text-5xl"
+              sx={{
+                color: 'text.primary',
+                mt: '16px',
+              }}
             />
-            {idComment === c.id ? (
-              <TextField
-                sx={{
-                  color: 'red',
-
-                  pr: '36px',
-                  pt: '12px',
-                }}
-                defaultValue={c.comment}
-                variant="standard"
-                multiline
-                fullWidth
-                InputProps={{ disableUnderline: true }}
-                onChange={(e) => setEditedComment(e.target.value)}
-              />
-            ) : (
-              <Typography
-                variant="body1"
+            <Box>
+              <Box
                 sx={{
                   color: 'text.primary',
-                  wordBreak: 'break-word',
-                  whiteSpace: 'normal',
                   pr: '36px',
                   pt: '12px',
+                  display: 'flex',
+                  gap: '4px',
                 }}
               >
-                {c.comment}
-              </Typography>
-            )}
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.primary',
+                    wordBreak: 'break-word',
+                    whiteSpace: 'normal',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {c.email}
+                </Typography>
+                {'· ' + c.created_at.slice(0, 10)}
+              </Box>
+              {idComment === c.id ? (
+                <TextField
+                  sx={{
+                    color: 'red',
+
+                    pr: '36px',
+                  }}
+                  defaultValue={c.comment}
+                  variant="standard"
+                  multiline
+                  fullWidth
+                  InputProps={{ disableUnderline: true }}
+                  onChange={(e) => setEditedComment(e.target.value)}
+                />
+              ) : (
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.primary',
+                    wordBreak: 'break-word',
+                    whiteSpace: 'normal',
+                    pr: '36px',
+                  }}
+                >
+                  {c.comment}
+                </Typography>
+              )}
+            </Box>
           </Box>
 
-          {idComment !== c.id && (
-            <IconButton
-              className="absolute top-[-4px] right-0"
-              title="Edit"
-              onClick={() => handleEditComment(c.id)}
-            >
-              <EditIcon className="text-sm" />
-            </IconButton>
+          {idComment !== c.id && c.email === currentUserEmail && (
+            <>
+              <IconButton
+                className="absolute top-[-4px] right-0"
+                title="Edit"
+                onClick={() => handleEditComment(c.id)}
+              >
+                <EditIcon className="text-sm" />
+              </IconButton>
+              <DeleteButton commentId={c.id} onDeleteComment={fetchComments} />
+            </>
           )}
 
-          <DeleteButton commentId={c.id} onDeleteComment={fetchComments} />
-
-          {idComment === c.id && (
+          {idComment === c.id && c.email === currentUserEmail && (
             <Box className="flex flex-row gap-3 justify-end">
               <Button
                 variant="outlined"

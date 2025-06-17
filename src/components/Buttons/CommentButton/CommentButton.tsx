@@ -1,10 +1,12 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material';
+import { supabase } from '@/db/supabaseClient';
 
 interface PropsType {
   movieId: string;
   comment?: string;
   onCommentAdded: () => void;
   setComment: React.Dispatch<React.SetStateAction<string>>;
+  userId: string;
 }
 
 const CommentButton = ({
@@ -12,19 +14,17 @@ const CommentButton = ({
   comment,
   onCommentAdded,
   setComment,
+  userId,
 }: PropsType) => {
   const handleComment = async () => {
     if (comment) {
-      await fetch("http://localhost:5000/comments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ movieId: movieId, comment: comment }),
-      });
+      const { error } = await supabase
+        .from('comments')
+        .insert({ movie_id: movieId, user_id: userId, comment: comment });
+      if (error) throw error;
 
       onCommentAdded();
-      setComment("");
+      setComment('');
     }
   };
 

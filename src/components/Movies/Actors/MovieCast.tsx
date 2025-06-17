@@ -15,7 +15,6 @@ const MovieCast = async ({ castId }: { castId: number[] }) => {
     .in('id', castId);
   if (error) throw error;
   const cast = data.map((actor) => actor.name);
-  console.log(cast);
 
   return (
     <Typography variant="h6" className="pt-2" sx={{ color: 'text.primary' }}>

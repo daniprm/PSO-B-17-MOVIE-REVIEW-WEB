@@ -1,5 +1,6 @@
-import { Button } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import { supabase } from '@/db/supabaseClient';
+import { Button } from '@mui/material';
+import { Dispatch, SetStateAction } from 'react';
 
 interface PropsType {
   commentId: number;
@@ -15,18 +16,11 @@ const SaveEditButton = ({
   setIdComment,
 }: PropsType) => {
   const handleEditComment = async () => {
-    await fetch(`http://localhost:5000/comments/${commentId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        comment: comment,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("Updated:", data))
-      .catch((err) => console.error("Error:", err));
+    const { error } = await supabase
+      .from('comments')
+      .update({ comment: comment })
+      .eq('id', commentId);
+    if (error) throw error;
 
     onEditComment();
     setIdComment(null);

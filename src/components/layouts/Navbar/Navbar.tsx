@@ -113,7 +113,7 @@ export default function SearchAppBar() {
             }}
           >
             <Link href="/" onClick={() => setSelectedGenres([])}>
-              Movie List
+              Filminisme
             </Link>
           </Typography>
           <Box className="flex flex-row justify-between gap-3">

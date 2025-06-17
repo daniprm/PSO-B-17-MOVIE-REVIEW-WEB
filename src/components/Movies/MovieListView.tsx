@@ -1,5 +1,5 @@
 'use client';
-import AppPagination from '../../Utilities/Pagination/Pagination';
+// import AppPagination from '../../Utilities/Pagination/Pagination';
 import { MovieType } from '@/types/Movie/MovieType';
 import { useEffect, useState } from 'react';
 import MovieList from './MovieList';
@@ -7,7 +7,7 @@ import MovieSkeleton from '../Skeleton/MovieSkeleton';
 import { supabase } from '@/db/supabaseClient';
 
 const MovieListView = () => {
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [movies, setMovies] = useState<MovieType[]>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,7 +27,7 @@ const MovieListView = () => {
       }
     };
     fetchData();
-  }, [page]);
+  }, []);
 
   return (
     <>
@@ -37,7 +37,7 @@ const MovieListView = () => {
         <>
           <MovieList movies={movies!} />
 
-          <AppPagination page={page} setPage={setPage} totalPages={24} />
+          {/* <AppPagination page={page} setPage={setPage} totalPages={24} /> */}
         </>
       )}
     </>
