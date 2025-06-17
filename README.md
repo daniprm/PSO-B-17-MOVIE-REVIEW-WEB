@@ -29,7 +29,7 @@ Proyek ini mengimplementasikan alur kerja Continuous Integration/Continuous Depl
 -   **Cypress**: Digunakan untuk melakukan *integration testing*, memvalidasi alur kerja pengguna dari awal hingga akhir.
 -   **Docker**: Digunakan untuk membuat *container image* dari aplikasi, memastikan konsistensi lingkungan dari lokal hingga produksi.
 -   **Docker Hub**: Berfungsi sebagai *container registry* yang menyimpan Docker image yang siap di-deploy.
--   **Azure Web App**: Platform cloud dari Microsoft yang digunakan sebagai tujuan deployment untuk lingkungan Staging dan Produksi.
+-   **Azure Web App**: Platform cloud dari Microsoft yang digunakan sebagai tujuan deployment untuk lingkungan Staging dan Produksi. Di dalam Azure Web App sudah tersedia fitur monitoring.
 
 ## Konfigurasi
 **1. Setup Azurre Web App**
