@@ -1,91 +1,86 @@
-# Movie Review Web
+# Filminisme
 
 [![CI/CD](https://github.com/daniprm/pso-b-17-movie-review-web/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/daniprm/pso-b-17-movie-review-web/actions/workflows/ci-cd.yml)
 
-Selamat datang di Proyek Web Review Film! Aplikasi ini adalah platform modern yang memungkinkan pengguna untuk mencari, melihat detail, dan mengelola daftar tontonan (watchlist) film mereka. Dibangun dengan teknologi web terdepan, proyek ini mengutamakan pengalaman pengguna yang cepat, responsif, dan intuitif.
+Selamat datang di Filminisme! Ini adalah dokumentasi teknis mendalam mengenai arsitektur, teknologi, dan implementasi aplikasi ulasan film ini. Aplikasi ini memungkinkan pengguna untuk mencari, melihat detail, dan mengelola daftar tontonan (watchlist) film mereka, dibangun dengan mengutamakan praktik pengembangan modern, performa, dan kualitas kode.
 
 ## Arsitektur Aplikasi
 
-Arsitektur aplikasi ini dirancang untuk menjadi modern, skalabel, dan mudah dikelola, dengan pemisahan yang jelas antara frontend dan backend service.
+Arsitektur Filminisme mengadopsi pendekatan modern berbasis komponen dengan pemisahan yang jelas antara logika frontend, layanan backend, dan alur kerja CI/CD.
 
--   **Frontend**: Dibangun sebagai Single Page Application (SPA) menggunakan **Next.js**. Ini memungkinkan *Server-Side Rendering* (SSR) untuk performa pemuatan awal yang cepat dan SEO yang optimal, serta *Client-Side Rendering* (CSR) untuk navigasi yang lancar. Styling ditangani oleh **Tailwind CSS**, sebuah framework CSS utility-first yang memungkinkan pembuatan antarmuka kustom dengan cepat.
--   **Backend (BaaS)**: Kami memanfaatkan **Supabase** sebagai *Backend-as-a-Service*. Supabase menyediakan fungsionalitas penting seperti:
-    -   **Otentikasi**: Mengelola pendaftaran dan login pengguna.
-    -   **Database PostgreSQL**: Menyimpan data pengguna, watchlist, dan komentar.
-    -   **API Otomatis**: Menyediakan endpoint API RESTful secara otomatis dari skema database.
--   **Pengujian**: Pengujian *End-to-End* (E2E) diimplementasikan dengan **Cypress** untuk memastikan semua alur pengguna, mulai dari pencarian hingga pengelolaan watchlist, berfungsi seperti yang diharapkan.
+-   **Frontend (Next.js)**: Aplikasi ini menggunakan Next.js 14 dengan App Router. Ini memungkinkan arsitektur berbasis komponen yang sangat modular dan optimal, dengan strategi rendering hibrida (Server & Client Components) untuk performa maksimal.
+-   **Backend (Supabase)**: Berfungsi sebagai Backend-as-a-Service (BaaS) yang menangani semua kebutuhan sisi server, termasuk otentikasi pengguna melalui Supabase Auth dan penyimpanan data pada database PostgreSQL.
+-   **Styling (Tailwind CSS)**: Sebuah framework CSS utility-first yang memungkinkan pembuatan antarmuka kustom dengan cepat dan konsisten.
+-   **Pengujian (Jest & Cypress)**: Kualitas kode dijamin melalui dua lapisan pengujian: Jest untuk unit testing komponen individual dan Cypress untuk integration testing alur kerja pengguna secara end-to-end.
 
 ## Arsitektur Pipeline (CI/CD)
 
-Proyek ini mengimplementasikan pipeline *Continuous Integration* (CI) menggunakan **GitHub Actions**. Pipeline ini memastikan kualitas dan stabilitas kode sebelum digabungkan ke branch utama.
+Proyek ini mengimplementasikan alur kerja Continuous Integration/Continuous Deployment (CI/CD) yang komprehensif menggunakan GitHub Actions. Pipeline ini mengotomatiskan seluruh proses, mulai dari pengujian hingga deployment ke lingkungan produksi, memastikan setiap perubahan kode diuji secara menyeluruh sebelum sampai ke pengguna.
 
--   **Trigger**: Alur kerja CI otomatis berjalan pada setiap `push` atau `pull_request` yang ditujukan ke branch `main`.
--   **Jobs**: Terdiri dari satu job utama yang berjalan di lingkungan `ubuntu-latest`.
--   **Langkah-langkah Pipeline**:
-    1.  **Checkout Code**: Mengunduh kode sumber dari repositori.
-    2.  **Setup Node.js**: Menginisialisasi lingkungan Node.js versi 20.
-    3.  **Install Dependencies**: Menjalankan `npm install` untuk menginstal semua paket yang dibutuhkan proyek.
-    4.  **Run E2E Tests**: Menjalankan seluruh rangkaian pengujian end-to-end menggunakan Cypress dengan perintah `npm run cypress:run`.
-    5.  **Build Project**: Membangun aplikasi untuk produksi dengan `npm run build` untuk memverifikasi bahwa tidak ada error saat proses build.
+![Arsitektur CI/CD Pipeline](Progress%203%20PSO.png)
 
-## Fitur Utama
+### Tahapan Pipeline
 
--   **Pencarian Film**: Cari film berdasarkan judul dengan cepat.
--   **Detail Film Komprehensif**: Lihat informasi lengkap termasuk sinopsis, genre, pemeran, dan platform streaming.
--   **Manajemen Watchlist**: Pengguna dapat masuk untuk menambahkan, melihat, dan mengelola daftar film yang ingin ditonton.
--   **Sistem Komentar**: Berikan ulasan dan lihat komentar dari pengguna lain.
--   **Desain Responsif & Mode Gelap**: Antarmuka yang nyaman digunakan di berbagai perangkat dan kondisi pencahayaan.
+Alur CI/CD ini terdiri dari beberapa tahapan (jobs) yang dijalankan secara berurutan. Alur ini akan terpicu setiap kali ada `push` atau `pull_request` ke branch `main`.
+
+**1. Lint & Unit Tests**
+Tahap awal ini bertanggung jawab untuk memastikan kualitas dan konsistensi kode melalui linting dan menjalankan unit test.
+-   **Langkah-langkah**:
+    -   *Checkout Kode*: Mengunduh kode sumber dari repositori.
+    -   *Setup Node.js*: Mengonfigurasi lingkungan Node.js versi 20.
+    -   *Install Dependensi*: Menginstal semua dependensi menggunakan `npm ci`.
+    -   *Jalankan Lint*: Menjalankan linter dengan `npm run lint`.
+    -   *Jalankan Unit Tests*: Menjalankan unit test dengan `npm test` menggunakan Jest.
+
+**2. Build Next.js App & Cypress Integration Test**
+Setelah kode lolos dari pemeriksaan awal, aplikasi akan di-build dan diuji secara integrasi menggunakan Cypress.
+-   **Langkah-langkah**:
+    -   *Build Aplikasi*: Melakukan build aplikasi Next.js dengan `npm run build`.
+    -   *Jalankan Cypress Tests*: Menjalankan integration test secara otomatis (`cypress run`) untuk memvalidasi alur kerja aplikasi secara end-to-end.
+    -   *Upload Artefak Build*: Jika semua pengujian berhasil, hasil build diunggah sebagai artefak `nextjs-build-output` untuk digunakan pada tahap selanjutnya.
+
+**3. Build & Push Docker Image**
+Setelah tahap pengujian berhasil, Docker image akan dibuat dari artefak build dan diunggah ke Docker Hub. Tahap ini hanya berjalan jika ada `push` ke branch `main`.
+-   **Langkah-langkah**:
+    -   *Download Artefak Build*: Mengunduh artefak `nextjs-build-output`.
+    -   *Login ke Docker Hub*: Melakukan autentikasi ke Docker Hub.
+    -   *Build dan Push Docker Image*: Membuat Docker image dari `Dockerfile` dan mengunggahnya ke Docker Hub dengan dua tag: `latest` dan berdasarkan `commit SHA`.
+
+**4. Deploy & Smoke Test Staging**
+Image yang berhasil dibuat kemudian di-deploy ke lingkungan staging untuk verifikasi akhir.
+-   **Langkah-langkah**:
+    -   *Deploy ke Azure Web App Staging*: Melakukan deployment Docker image ke slot staging di Azure Web App.
+    -   *Smoke Test Staging*: Melakukan *smoke test* dengan mengirimkan permintaan `curl` ke URL staging untuk memastikan aplikasi berjalan dengan baik.
+
+**5. Deploy to Production**
+Setelah verifikasi di staging berhasil, aplikasi siap untuk di-deploy ke lingkungan produksi.
+-   **Langkah-langkah**:
+    -   *Deploy ke Azure Web App Production*: Melakukan deployment Docker image yang sama ke lingkungan produksi utama di Azure Web App.
 
 ## Teknologi yang Digunakan
 
-| Kategori          | Teknologi                                          | Versi    |
-| :---------------- | :------------------------------------------------- | :------- |
-| **Framework** | [Next.js](https://nextjs.org/)                     | 14.2.4   |
-| **Pustaka UI** | [React](https://react.dev/)                        | 18       |
-| **Styling** | [Tailwind CSS](https://tailwindcss.com/)           | 3.4.1    |
-| **Backend & DB** | [Supabase](https://supabase.io/)                   | ^2.43.4  |
-| **Pengujian E2E** | [Cypress](https://www.cypress.io/)                 | ^13.11.0 |
-| **Manajemen State**| React Context API                                  | -        |
-| **Linting** | [ESLint](https://eslint.org/)                      | 8        |
-| **Bahasa** | [TypeScript](https://www.typescriptlang.org/)      | 5        |
+-   **Next.js**: Kerangka kerja React yang digunakan untuk membangun antarmuka pengguna Filminisme.
+-   **Supabase**: Digunakan untuk mengatur basis data dan seluruh tugas backend seperti autentikasi.
+-   **GitHub Actions**: Alat utama yang mengatur keseluruhan alur kerja CI/CD, mulai dari testing hingga deployment.
+-   **Jest**: Digunakan untuk melakukan *unit testing* pada komponen dan fungsi individual dalam kode JavaScript/TypeScript.
+-   **Cypress**: Digunakan untuk melakukan *integration testing*, memvalidasi alur kerja pengguna dari awal hingga akhir.
+-   **Docker**: Digunakan untuk membuat *container image* dari aplikasi, memastikan konsistensi lingkungan dari lokal hingga produksi.
+-   **Docker Hub**: Berfungsi sebagai *container registry* yang menyimpan Docker image yang siap di-deploy.
+-   **Azure Web App**: Platform cloud dari Microsoft yang digunakan sebagai tujuan deployment untuk lingkungan Staging dan Produksi.
 
-## Panduan Instalasi & Penggunaan
-
-Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan lokal Anda.
+## Panduan Instalasi Lokal
 
 ### Prasyarat
+-   Node.js (v20.x atau lebih baru)
+-   NPM
+-   Akun Supabase
 
--   [Node.js](https://nodejs.org/) (v20.x atau lebih baru)
--   [npm](https://www.npmjs.com/) (atau package manager lain seperti yarn/pnpm)
--   Akun [Supabase](https://supabase.com/) untuk mendapatkan kredensial API.
-
-### Langkah-langkah Instalasi
-
-1.  **Clone Repositori**
-    ```sh
-    git clone [https://github.com/daniprm/pso-b-17-movie-review-web.git](https://github.com/daniprm/pso-b-17-movie-review-web.git)
-    cd pso-b-17-movie-review-web
-    ```
-
-2.  **Instal Dependensi**
-    Jalankan perintah berikut untuk menginstal semua paket yang diperlukan dari `package.json`.
-    ```sh
-    npm install
-    ```
-
-3.  **Konfigurasi Environment Variables**
-    Salin file `.env.example` menjadi `.env.local` dan isi dengan kredensial dari proyek Supabase Anda.
-    ```sh
-    cp .env.example .env.local
-    ```
-    Kemudian, edit file `.env.local`:
-    ```env
-    NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-    NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-    ```
+### Langkah-langkah
+1.  **Clone Repositori**: `git clone https://github.com/daniprm/pso-b-17-movie-review-web.git`
+2.  **Masuk ke Direktori**: `cd pso-b-17-movie-review-web`
+3.  **Instal Dependensi**: `npm install`
+4.  **Konfigurasi Environment**: Salin `.env.example` ke `.env.local` dan isi dengan kredensial Supabase Anda.
 
 ### Menjalankan Aplikasi
-
-Setelah instalasi selesai, jalankan server pengembangan lokal.
-```bash
-npm run dev
+-   **Mode Pengembangan**: `npm run dev`
+-   **Menjalankan Tes Lokal**: `npm test` (untuk Jest) dan `npm run cypress:open` (untuk Cypress).
