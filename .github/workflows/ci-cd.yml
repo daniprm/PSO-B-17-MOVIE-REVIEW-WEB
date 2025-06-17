@@ -1,4 +1,4 @@
-name: Deploy PSO B - 17 - Filminisme
+name: CI/CD Website Filminisme - PSO B - Kelompok 17
 
 on:
   push:
