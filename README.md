@@ -17,7 +17,7 @@ Arsitektur Filminisme mengadopsi pendekatan modern berbasis komponen dengan pemi
 
 Proyek ini mengimplementasikan alur kerja Continuous Integration/Continuous Deployment (CI/CD) yang komprehensif menggunakan GitHub Actions. Pipeline ini mengotomatiskan seluruh proses, mulai dari pengujian hingga deployment ke lingkungan produksi, memastikan setiap perubahan kode diuji secara menyeluruh sebelum sampai ke pengguna.
 
-![Arsitektur CI/CD Pipeline](Progress%203%20PSO.png)
+![Arsitektur CI/CD Pipeline](arsitektur.png)
 
 ### Tahapan Pipeline
 
