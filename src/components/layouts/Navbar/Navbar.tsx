@@ -117,7 +117,7 @@ export default function SearchAppBar() {
             </Link>
           </Typography>
           <Box className="flex flex-row justify-between gap-3">
-            <Search>
+            {/* <Search>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
@@ -130,7 +130,7 @@ export default function SearchAppBar() {
                 inputRef={searchRef}
                 onKeyDown={handleSearch}
               />
-            </Search>
+            </Search> */}
             <FilterPopper />
             <Link href="/watchlist">
               <IconButton>
