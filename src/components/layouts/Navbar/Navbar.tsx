@@ -4,15 +4,15 @@ import { Box, Typography, IconButton } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Logout } from '@mui/icons-material';
 
-// import { useRef } from 'react';
+import { useRef } from 'react';
 import ToggleTheme from '../../theme/ToggleTheme';
 import Link from 'next/link';
-// import { styled, alpha } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-// import InputBase from '@mui/material/InputBase';
-// import SearchIcon from '@mui/icons-material/Search';
-// import { useRouter } from 'next/navigation';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import { useRouter } from 'next/navigation';
 import FilterPopper from '@/components/Buttons/FilterButton/FilterPopper';
 import { useFilterContext } from '@/context/FilterContext/FilterContext';
 import { logout } from '@/app/auth/actions';
@@ -46,59 +46,59 @@ import { logout } from '@/app/auth/actions';
 
 // export default Navbar;
 
-// const Search = styled('div')(({ theme }) => ({
-//   position: 'relative',
-//   borderRadius: theme.shape.borderRadius,
-//   backgroundColor: alpha(theme.palette.common.white, 0.15),
-//   '&:hover': {
-//     backgroundColor: alpha(theme.palette.common.white, 0.25),
-//   },
-//   marginLeft: 0,
-//   width: '100%',
-//   [theme.breakpoints.up('sm')]: {
-//     marginLeft: theme.spacing(1),
-//     width: 'auto',
-//   },
-// }));
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+}));
 
-// const SearchIconWrapper = styled('div')(({ theme }) => ({
-//   padding: theme.spacing(0, 2),
-//   height: '100%',
-//   position: 'absolute',
-//   pointerEvents: 'none',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-// }));
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
 
-// const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//   color: 'inherit',
-//   width: '100%',
-//   '& .MuiInputBase-input': {
-//     padding: theme.spacing(1, 1, 1, 0),
-//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//     transition: theme.transitions.create('width'),
-//     [theme.breakpoints.up('sm')]: {
-//       width: '12ch',
-//       '&:focus': {
-//         width: '20ch',
-//       },
-//     },
-//   },
-// }));
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  width: '100%',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
 
 export default function SearchAppBar() {
   const { setSelectedGenres } = useFilterContext();
-  // const searchRef = useRef<HTMLInputElement | null>(null);
-  // const router = useRouter();
-  // const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (event.key === 'Enter' && searchRef.current?.value === '') {
-  //     router.push('/');
-  //   } else if (event.key === 'Enter' || event.type === 'click') {
-  //     event.preventDefault();
-  //     router.push(`/search/${searchRef.current?.value}`);
-  //   }
-  // };
+  const searchRef = useRef<HTMLInputElement | null>(null);
+  const router = useRouter();
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && searchRef.current?.value === '') {
+      router.push('/');
+    } else if (event.key === 'Enter' || event.type === 'click') {
+      event.preventDefault();
+      router.push(`/search/${searchRef.current?.value}`);
+    }
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ py: 1, bgcolor: 'background.paper' }}>
@@ -117,7 +117,7 @@ export default function SearchAppBar() {
             </Link>
           </Typography>
           <Box className="flex flex-row justify-between gap-3">
-            {/* <Search>
+            <Search>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
@@ -130,7 +130,7 @@ export default function SearchAppBar() {
                 inputRef={searchRef}
                 onKeyDown={handleSearch}
               />
-            </Search> */}
+            </Search>
             <FilterPopper />
             <Link href="/watchlist">
               <IconButton>
