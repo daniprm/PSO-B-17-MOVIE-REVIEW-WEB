@@ -1,16 +1,16 @@
 import AppShell from '@/components/layouts/AppShell/AppShell';
-// import { Suspense } from 'react';
+import { Suspense } from 'react';
 import MovieDetailPage from '@/components/Movies/Detail/MovieDetailPage';
-// import Loading from '@/components/Loading/Loading';
-// import CommentBox from '@/components/Comment/CommentBox';
+import Loading from '@/components/Loading/Loading';
+import CommentBox from '@/components/Comment/CommentBox';
 import { supabase } from '@/db/supabaseClient';
-// const CommentsContent = async ({ movieId }: { movieId: string }) => {
-//   const { data: commentsData } = await supabase
-//     .from('comments')
-//     .select()
-//     .eq('movie_id', movieId);
-//   return <CommentBox movieId={movieId} commentsData={commentsData!} />;
-// };
+const CommentsContent = async ({ movieId }: { movieId: string }) => {
+  const { data: commentsData } = await supabase
+    .from('comments')
+    .select()
+    .eq('movie_id', movieId);
+  return <CommentBox movieId={movieId} commentsData={commentsData!} />;
+};
 
 const MovieDetail = async ({ params }: { params: { movieId: string } }) => {
   const { movieId } = await params;
@@ -25,9 +25,9 @@ const MovieDetail = async ({ params }: { params: { movieId: string } }) => {
   return (
     <AppShell>
       <MovieDetailPage movie={movie[0]} />
-      {/* <Suspense fallback={Loading()}>
+      <Suspense fallback={Loading()}>
         <CommentsContent movieId={movieId} />
-      </Suspense> */}
+      </Suspense>
     </AppShell>
   );
 };
